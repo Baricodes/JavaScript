@@ -56,8 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Selecting our HTML element with class grid
     // And representing it in our JavaScript as 'grid'
     const grid = document.querySelector('.grid')
+    // Selecting the span element with the Id of result
     const resultDisplay = document.querySelector('#result')
-    // Arrays for flipCard function
+    // Arrays mainly for flipCard function
     var cardsChosen = []
     var cardsChosenId = []
     var cardsWon = []
@@ -86,31 +87,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check for matches function
     function checkForMatch() {
+        // Using querySelectorAll on 'img'
         const cards = document.querySelectorAll('img')
+        // Getting the first and second id in the cards chosen id array
         const optionOneId = cardsChosenId[0]
         const optionTwoId = cardsChosenId[1]
-
+        // If (the exact same card square is chosen by the user)
         if(optionOneId == optionTwoId) {
+
             cards[optionOneId].setAttribute('src', 'images/blank.png')
             cards[optionTwoId].setAttribute('src', 'images/blank.png')
             alert('You have clicked the same image!')
           }
+          // else if (its two different sqaures with the same img)
           else if (cardsChosen[0] === cardsChosen[1]) {
             alert('You found a match')
+            // Setting the card sqaure to a white img
             cards[optionOneId].setAttribute('src', 'images/white.png')
             cards[optionTwoId].setAttribute('src', 'images/white.png')
+            // Removing the click functionallity from the matching card sqaures chosen
             cards[optionOneId].removeEventListener('click', flipCard)
             cards[optionTwoId].removeEventListener('click', flipCard)
+            // Push the cards currently in the cards chosen array to the 
+            // cards won array
             cardsWon.push(cardsChosen)
+            // else reset the cards to default
           } else {
             cards[optionOneId].setAttribute('src', 'images/blank.png')
             cards[optionTwoId].setAttribute('src', 'images/blank.png')
             alert('Sorry, try again')
           }
+          // Reset cards chosen array and cards chosen Id array
           cardsChosen = []
           cardsChosenId = []
+          // Display score onto screen. This is linked to the span element  
+          // with the result Id
           resultDisplay.textContent = cardsWon.length
+          // If (all the card matches are found)
           if  (cardsWon.length === cardArray.length/2) {
+            // If player won display message
             resultDisplay.textContent = 'Congratulations! You found them all!'
           }
     }
